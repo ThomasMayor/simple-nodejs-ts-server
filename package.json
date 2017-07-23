@@ -1,0 +1,55 @@
+{
+  "name": "simple-ts-nodejs-rest-jwt-server",
+  "author": "Thomas Mayor",
+  "private": true,
+  "scripts": {
+    "start:win": "tsc server.ts --outDir ./dist && SET NODE_ENV=development&& node ./dist/server.js",
+    "start": "tsc server.ts --outDir ./dist && NODE_ENV='development' && node ./dist/server.js",
+    "start:dev": "tsc server.ts -w --outDir ./dist & nodemon ./dist/server.js",
+    "start:devwin": "SET NODE_ENV=development&& START /B tsc server.ts -w --outDir ./dist & START /B nodemon ./dist/server.js",
+    "test:win": "SET TS_NODE_COMPILER_OPTIONS={\"module\":\"commonjs\"}&&SET NODE_ENV=test&& mocha -r ts-node/register ./test/**/*.test.ts",
+    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' && NODE_ENV=test && mocha -r ts-node/register ./test/**/*.test.ts"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.3",
+    "express": "^4.15.3",
+    "jsonwebtoken": "^7.4.1",
+    "mongodb": "^2.2.30",
+    "mongoose": "^4.11.1",
+    "morgan": "^1.8.2",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1",
+    "typescript": "2.4.2"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.0",
+    "@types/body-parser": "^1.16.4",
+    "@types/chai": "^4.0.1",
+    "@types/cors": "^2.8.1",
+    "@types/es6-promise": "0.0.32",
+    "@types/express": "^4.0.36",
+    "@types/jsonwebtoken": "^7.2.2",
+    "@types/mocha": "^2.2.41",
+    "@types/mongodb": "^2.2.7",
+    "@types/mongoose": "^4.7.18",
+    "@types/morgan": "^1.7.32",
+    "@types/node": "^8.0.9",
+    "@types/passport": "^0.3.3",
+    "@types/passport-jwt": "^2.0.21",
+    "@types/supertest": "^2.0.2",
+    "chai": "^4.1.0",
+    "mocha": "^3.4.2",
+    "mongoose": "^4.11.1",
+    "supertest": "^3.0.0",
+    "ts-node": "^3.2.1",
+    "tslint": "^5.5.0",
+    "tslint-eslint-rules": "^4.1.1"
+  },
+  "engines": {
+    "node": "~7.0.0"
+  },
+  "version": "0.0.1",
+  "description": "Simple TS NodeJS REST Server using JWT"
+}
