@@ -92,7 +92,10 @@ export const userController = {
   },
 
   isAuth: (req:any,res:any)=> {
-    res.json({ success: true, message: 'JWT is correct'});
+    let token = jwt.sign(req.authUser.toJSON(), SECRET_TOKEN_KEY, {
+      expiresIn: JWT_EXPIRE // expires in 24 hours
+    });
+    res.json({ success: true, message: 'JWT is correct', token: token});
   },
 
   auth: (req:any,res:any)=> {
