@@ -19,8 +19,7 @@ export class UsersRoutes {
 
         router.get('/isauth', passport.authenticate('jwt', {session: false}), log, userController.isAuth)
         router.get('/', passport.authenticate('jwt', {session: false}), log, userController.getAll)
-        router.get('/:id', passport.authenticate('jwt', {session: false}), log, userController.getUser)
-
+        router.get('/:uid', passport.authenticate('jwt', {session: false}), log, userController.getUser)
         // then return the user router
         return router;
     }
