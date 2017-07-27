@@ -73,6 +73,7 @@ export const userController = {
           var newuser = <IUserModel>new User({
             email: req.body.email,
             password: hash,
+            name: req.body.name,
             admin: false,
             created: new Date()
           });
