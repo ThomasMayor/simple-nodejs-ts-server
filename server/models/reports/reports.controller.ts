@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 
 import { Report, IReportModel } from './report.model';
+import { userController } from '../users/user.controller';
 
 
 const toObjectId = (_id: string): mongoose.Types.ObjectId =>{
@@ -30,6 +31,10 @@ export const reportController = {
       let docsReady = docs.map((report)=> report.toJSON());
 			res.json(docsReady);
 		})
+  },
+
+  loadUser : (report: IReportModel):IReportModel => {
+    
   }
 
 }
