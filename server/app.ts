@@ -56,10 +56,10 @@ export class Server {
     //Other middleware
     this.app
       // use bodyParser middleware to decode json parameters
-      .use(bodyParser.json())
+      .use(bodyParser.json({limit: '50mb'}))
       .use(bodyParser.json({type: 'application/vnd.api+json'}))
       // use bodyParser middleware to decode urlencoded parameters
-      .use(bodyParser.urlencoded({extended: false}))
+      .use(bodyParser.urlencoded({limit: '50mb', extended: false}))
       // secret variable for jwt
       .set('superSecret', SECRET_TOKEN_KEY)
       // cors domaine origin
