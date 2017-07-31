@@ -1,17 +1,19 @@
 import * as mongoose from 'mongoose';
 // Import Schemas
 import { ReportSchema } from './report.schema';
+import { IUserModel } from '../users/user.model';
 
 export interface IReportModel extends mongoose.Document {
   title: string;
   description: string;
   pictures: string[];
-  approved: mongoose.Schema.Types.ObjectId[];
-  disapproved: mongoose.Schema.Types.ObjectId[];
+  approved: Array<mongoose.Schema.Types.ObjectId>;
+  disapproved: Array<mongoose.Schema.Types.ObjectId>;
   created: Date;
-  user_id: mongoose.Schema.Types.ObjectId;
+  _creator: mongoose.Schema.Types.ObjectId;
   latitude: number;
   longitude: number;
+  place: string;
 }
 
 // Define & export Mongoose Model with Interface

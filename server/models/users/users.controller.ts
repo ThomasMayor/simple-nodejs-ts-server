@@ -2,14 +2,13 @@ import * as mongoose from 'mongoose';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcryptjs';
 
+import { helperController } from '../helper.controller';
 import { User, IUserModel } from './user.model';
 
 // Import config
 import { SECRET_TOKEN_KEY, BCRYPT_ROUND, PASSWORD_MIN_LENGHT, JWT_EXPIRE} from "../../config";
 
-const toObjectId = (_id: string): mongoose.Types.ObjectId =>{
-    return mongoose.Types.ObjectId.createFromHexString(_id);
-}
+
 
 export const userController = {
   // Route to add mokup user in MongoDB
@@ -18,7 +17,7 @@ export const userController = {
       email:  aa@aa.ch
       pwd:    A123456
   */
-	setup : (req:any,res:any) =>{
+	setup : (req:any,res:any) => {
     // Use bcrypte to encrypte user password
     bcrypt.hash('A123456', BCRYPT_ROUND, (err, hash) =>{
       if(err){
@@ -31,6 +30,7 @@ export const userController = {
       //(new User(<IUserModel>req.body))
       var newuser = <IUserModel>new User({
         email: 'aa@aa.ch',
+        name: 'Thomas Mayor',
         password: hash,
         admin: true,
         created: new Date()
@@ -42,17 +42,19 @@ export const userController = {
           return;
         };
         console.log('User saved successfully');
-        res.json({ success: true });
+        res.json({ success: true, user: newuser.toJSON() });
   		})
     });
 	},
 
 	signup : (req:any,res:any) =>{
-    console.log('req.body-> ', req.body);
 		//(new User(<IUserModel>req.body))
     // check existe user in DB
     // before add new user
     // find the user
+
+
+
     User.findOne({email: req.body.email}, (err, user:IUserModel)=> {
       if (err) throw err;
       if (!user) {
@@ -156,8 +158,10 @@ export const userController = {
     res.json(req.user.toJSON());
   },
 
+
+
   checkJWT: (req:any, jwtuser:any, next:any) => {
-    User.findById(toObjectId(jwtuser._id)).then(user => {
+    User.findById(helperController.toObjectId(jwtuser._id)).then(user => {
       if (!user) {
         next(null, false);
        } else {
@@ -168,7 +172,7 @@ export const userController = {
   },
 
   checkUID: (req:any, res:any, next:any, uid:any) => {
-    User.findById(toObjectId(uid)).then(user => {
+    User.findById(helperController.toObjectId(uid)).then(user => {
         if (!user) {
             return res.status(404 /* Not Found */).send();
         } else {

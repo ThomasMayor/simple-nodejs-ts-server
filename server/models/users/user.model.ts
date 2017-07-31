@@ -6,6 +6,7 @@ export interface IUserModel extends mongoose.Document {
   password: string,
   email:string,
   admin: boolean,
+  name: string,
   created: Date,
   verified: boolean
 }

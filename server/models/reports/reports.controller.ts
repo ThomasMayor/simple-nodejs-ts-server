@@ -1,19 +1,16 @@
 import * as mongoose from 'mongoose';
 
 import { Report, IReportModel } from './report.model';
-import { userController } from '../users/user.controller';
+import { User } from '../users/user.model';
+import { helperController } from '../helper.controller';
 
-
-const toObjectId = (_id: string): mongoose.Types.ObjectId =>{
-    return mongoose.Types.ObjectId.createFromHexString(_id);
-}
 
 export const reportController = {
   insert : (req:any,res:any) => {
     var report = <IReportModel>new Report(req.body);
     report.created = new Date();
     console.log(report);
-    report.user_id = req.authUser._id;
+    report._creator = req.authUser._id;
     report.save((err, doc:IReportModel) => {
       if(err) {
         console.log('save report mokup-> ',err)
@@ -26,15 +23,53 @@ export const reportController = {
   },
 
   getAll : (req:any,res:any) => {
-		Report.find((err, docs:IReportModel[]) => {
+		Report.find()
+          .populate('_creator')
+          .exec((err, docs:IReportModel[])=> {
 			if(err) return console.log(err);
-      let docsReady = docs.map((report)=> report.toJSON());
+      /*console.log('Reports loaded');
+      console.log(docs);*/
+      let docsReady = docs.map((report) => report.toJSON());
 			res.json(docsReady);
 		})
   },
 
-  loadUser : (report: IReportModel):IReportModel => {
-    
+  approve : (req:any, res:any) => {
+    let report: any = req.report; //declare as any to avoid TS2339 error
+    if (report.approved.findIndex((id:any) => id.toString() == req.authUser._id) == -1 &&
+        report.disapproved.findIndex((id:any) => id.toString() == req.authUser._id) == -1) {
+      report.approved.push(req.authUser._id);
+      report.save()
+            .then((newreport:IReportModel) => res.send({ success: true, report: newreport }))
+            .catch((err:any) => helperController.handleError(req, res, err));
+    }
+    else
+      helperController.handleError(req, res, 'Constat déjà évalué');
+  },
+
+  disapprove : (req:any, res:any) => {
+    let report: any = req.report; //declare as any to avoid TS2339 error
+    if (report.approved.findIndex((id:any) => id.toString() == req.authUser._id) == -1 &&
+        report.disapproved.findIndex((id:any) => id.toString() == req.authUser._id) == -1) {
+      report.disapproved.push(req.authUser._id);
+      report.save()
+            .then((newreport:IReportModel) => res.send({ success: true, report: newreport }))
+            .catch((err:any) => helperController.handleError(req, res, err));
+    }
+    else
+      helperController.handleError(req, res, 'Constat déjà évalué');
+  },
+
+  checkRID: (req:any, res:any, next:any, rid:any) => {
+    Report.findById(helperController.toObjectId(rid)).then(report => {
+        if (!report) {
+            return res.status(404 /* Not Found */).send();
+        } else {
+            //add report to request
+            req.report = report;
+            return next();
+        }
+    }).catch(next);
   }
 
 }

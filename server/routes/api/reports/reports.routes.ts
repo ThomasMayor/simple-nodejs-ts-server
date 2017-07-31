@@ -9,9 +9,15 @@ export class ReportsRoutes {
 
 
     routes() {
-        // Public Endpoints:
+        // Private Endpoints:
         router.post('/', passport.authenticate('jwt', {session: false}), log, reportController.insert)
         router.get('/', passport.authenticate('jwt', {session: false}), log, reportController.getAll)
+
+        router.param('rid', reportController.checkRID);
+
+        router.post('/:rid/approve', passport.authenticate('jwt', {session: false}), log, reportController.approve)
+        router.post('/:rid/disapprove', passport.authenticate('jwt', {session: false}), log, reportController.disapprove)
+
         /*router.post('/signup', log, reportController.signup)
 
         // Privates Endpoints

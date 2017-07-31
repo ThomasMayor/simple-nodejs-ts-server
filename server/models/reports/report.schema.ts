@@ -28,9 +28,10 @@ export const ReportSchema = new mongoose.Schema({
         required: true,
         default: new Date()
     },
-    user_id: {
+    _creator: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'users'
     },
     latitude: {
         type: Number,
@@ -38,6 +39,10 @@ export const ReportSchema = new mongoose.Schema({
     },
     longitude: {
         type: Number,
+        required: true
+    },
+    place: {
+        type: String,
         required: true
     }
 
