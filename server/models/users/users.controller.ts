@@ -82,7 +82,10 @@ export const userController = {
           newuser.save((err, doc:IUserModel) => {
       			if(err) return console.log(err);
             console.log('User created successfully');
-            res.json({ success: true, message: 'User created successfully' });
+            let token = jwt.sign(newuser.toJSON(), SECRET_TOKEN_KEY, {
+              expiresIn: JWT_EXPIRE // expires in 24 hours
+            });
+            res.json({ success: true, message: 'User created successfully', token: token });
       		})
         })
 

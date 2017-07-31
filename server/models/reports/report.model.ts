@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose';
 // Import Schemas
 import { ReportSchema } from './report.schema';
-import { IUserModel } from '../users/user.model';
 
 export interface IReportModel extends mongoose.Document {
   title: string;
@@ -14,6 +13,7 @@ export interface IReportModel extends mongoose.Document {
   latitude: number;
   longitude: number;
   place: string;
+  category: number;
 }
 
 // Define & export Mongoose Model with Interface

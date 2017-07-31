@@ -44,6 +44,7 @@ export const ReportSchema = new mongoose.Schema({
     place: {
         type: String,
         required: true
-    }
+    },
+    category: Number,
 
 });
