@@ -8,7 +8,8 @@ import { helperController } from '../helper.controller';
 export const reportController = {
   insert : (req:any,res:any) => {
     var report = <IReportModel>new Report(req.body);
-    report.created = new Date();
+    if (!report.created)
+      report.created = new Date();
     console.log(report);
     report._creator = req.authUser._id;
     report.save((err, doc:IReportModel) => {
