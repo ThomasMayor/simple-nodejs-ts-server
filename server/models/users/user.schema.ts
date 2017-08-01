@@ -25,6 +25,7 @@ export const UserSchema = new mongoose.Schema({
         default: new Date()
     },
     verified: Boolean,
+    profilePicture: String,
 },
 {
     toJSON: {

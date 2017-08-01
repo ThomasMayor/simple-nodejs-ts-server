@@ -8,7 +8,8 @@ export interface IUserModel extends mongoose.Document {
   admin: boolean,
   name: string,
   created: Date,
-  verified: boolean
+  verified: boolean,
+  profilePicture: string;
 }
 
 // Define & export Mongoose Model with Interface

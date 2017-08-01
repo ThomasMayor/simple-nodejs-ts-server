@@ -27,11 +27,19 @@ export const reportController = {
           .populate('_creator')
           .exec((err, docs:IReportModel[])=> {
 			if(err) return console.log(err);
-      /*console.log('Reports loaded');
-      console.log(docs);*/
       let docsReady = docs.map((report) => report.toJSON());
 			res.json(docsReady);
 		})
+  },
+
+  getAllByUserId : (req:any, res:any) => {
+    Report.find({ _creator: req.user._id })
+          .populate('_creator')
+          .exec((err, docs:IReportModel[])=> {
+      if(err) return console.log(err);
+      let docsReady = docs.map((report) => report.toJSON());
+      res.json(docsReady);
+    })
   },
 
   approve : (req:any, res:any) => {
