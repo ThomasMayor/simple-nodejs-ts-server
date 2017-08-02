@@ -191,8 +191,6 @@ export const userController = {
       return res.status(403).send({success: false, message: "Vous n'avez pas le droit de modifier cet utilisateur."});
     }
 
-    const forbidden = ['admin', 'created', 'verified'];
-    const ignore = ['_id', 'password'];
     if (req.body) {
       let email = req.body.email ? req.body.email : 'NotAnEmail';
       let name = req.body.name ? req.body.name : '';

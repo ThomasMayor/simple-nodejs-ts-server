@@ -35,6 +35,7 @@ export const reportController = {
 
   getAllByUserId : (req:any, res:any) => {
     Report.find({ _creator: req.user._id })
+          .sort({ created: -1 })
           .populate('_creator')
           .exec((err, docs:IReportModel[])=> {
       if(err) return console.log(err);
