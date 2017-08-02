@@ -26,6 +26,26 @@ export const UserSchema = new mongoose.Schema({
     },
     verified: Boolean,
     profilePicture: String,
+    approvals: {
+      type: Number,
+      required: true,
+      default: 0
+    },
+    disapprovals: {
+      type: Number,
+      required: true,
+      default: 0
+    },
+    reports: {
+      type: Number,
+      required: true,
+      default: 0
+    },
+    lastReport: {
+        type: Date,
+        required: true,
+        default: new Date(2000,0,1),
+    },
 },
 {
     toJSON: {

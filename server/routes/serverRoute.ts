@@ -12,6 +12,7 @@ export class ServerRoutes {
         res.status(200);
         res.json({api: 'Hello!'});
        });
+    
       return app;
     }
 }

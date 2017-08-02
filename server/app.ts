@@ -123,6 +123,7 @@ export class Server {
   }
 
   bootstrap():void{
+    console.log('bootstrap')
     this.server.on('error', this.onError);
     this.server.listen(this.port, ()=>{
     	console.log("Listnening on port " + this.port)
